@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.hflabs</groupId>
+        <artifactId>parent</artifactId>
+        <version>4.0-SNAPSHOT</version>
+        <relativePath>lib/ru/hflabs/parent/4.0-SNAPSHOT/parent-4.0-20170829.091629-1.pom</relativePath>
+    </parent>
+
+    <groupId>ru.olgak</groupId>
+    <artifactId>folks</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
+    <name>Folks example</name>
+
+    <properties>
+        <hibernate.version>4.2.2.Final</hibernate.version>
+        <ru.hflabs.util.version>1.5.1-SNAPSHOT</ru.hflabs.util.version>
+        <maven.checkstyle.skip>true</maven.checkstyle.skip>
+    </properties>
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/*Test*.java</include>
+                        <include>**/*Case*.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>checkstyle</id>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
+                        <phase>process-sources</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>${maven.checkstyle.skip}</skip>
+                    <failsOnError>true</failsOnError>
+                    <configLocation>${project.basedir}/lib/checkstyle.xml</configLocation>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+    <repositories>
+        <repository>
+            <id>project.local</id>
+            <name>project</name>
+            <url>file:${project.basedir}/lib</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.hflabs</groupId>
+            <artifactId>utils-lucene</artifactId>
+            <version>${ru.hflabs.util.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.hflabs</groupId>
+            <artifactId>utils-test</artifactId>
+            <version>${ru.hflabs.util.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.swift.common</groupId>
+            <artifactId>jira-soap</artifactId>
+            <version>4.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.hflabs</groupId>
+            <artifactId>utils-core</artifactId>
+            <version>${ru.hflabs.util.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.hflabs</groupId>
+            <artifactId>utils-io</artifactId>
+            <version>${ru.hflabs.util.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.hflabs</groupId>
+            <artifactId>utils-spring</artifactId>
+            <version>${ru.hflabs.util.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.3.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+            <!--<scope>runtime</scope>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${springframework.version}</version>
+            <!--<scope>runtime</scope>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

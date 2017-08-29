@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>ru.hflabs</groupId>
+  <artifactId>utils</artifactId>
+  <versioning>
+    <versions>
+      <version>1.5.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20170822174539</lastUpdated>
+  </versioning>
+</metadata>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.hflabs</groupId>
+        <artifactId>parent</artifactId>
+        <version>4.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>ru.hflabs</groupId>
+    <artifactId>utils</artifactId>
+    <version>1.5.1-SNAPSHOT</version>
+
+    <name>HFLabs Utils</name>
+    <url>http://www.hflabs.ru/services-migration.htm</url>
+    <description>Утилиты для работы с  различными классами</description>
+
+    <packaging>pom</packaging>
+
+    <scm>
+        <url>http://hg.hflabs.ru/utils</url>
+        <connection>scm:hg:http://hg.hflabs.ru/utils</connection>
+        <developerConnection>scm:hg:http://hg.hflabs.ru/utils</developerConnection>
+    </scm>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <modules>
+        <module>core</module>
+        <module>io</module>
+        <module>javac</module>
+        <module>jndi</module>
+        <module>lipa</module>
+        <module>log4j</module>
+        <module>lucene</module>
+        <module>security</module>
+        <module>soap</module>
+        <module>spring</module>
+        <module>swing</module>
+        <module>test</module>
+    </modules>
+
+    <properties>
+        <maven.checkstyle.skip>false</maven.checkstyle.skip>
+    </properties>
+
+</project>
