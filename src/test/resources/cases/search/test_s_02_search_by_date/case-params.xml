@@ -5,10 +5,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="toSearchDescriptor.test_07" parent="toSearchDescriptor">
+    <bean id="toSearchDescriptor.test_s_02_search_by_date" parent="toSearchDescriptor">
         <property name="entityQuery">
             <bean class="ru.olgak.folks.api.search.EntityQuery">
-                <property name="search" value="Иванов"/>
+                <property name="search" value="01.10.2011"/>
             </bean>
         </property>
         <property name="expectedResult">

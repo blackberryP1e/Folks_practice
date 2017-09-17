@@ -16,7 +16,7 @@ public class Folk extends AbstractEntity {
     @Searchable(search = true, filter = true, sort = true)
     private String name;
 
-    @Searchable(search = true)
+    @Searchable(search = true, filter = true)
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 

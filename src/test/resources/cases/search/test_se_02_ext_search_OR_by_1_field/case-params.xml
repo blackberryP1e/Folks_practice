@@ -5,15 +5,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="toSearchDescriptor.test_05" parent="toSearchDescriptor">
+    <bean id="toSearchDescriptor.test_se_02_ext_search_OR_by_1_field" parent="toSearchDescriptor">
         <property name="entityQuery">
             <bean class="ru.olgak.folks.api.search.EntityQuery">
-                <property name="search" value="Иванов"/>
+                <property name="search" value="? Folk.name = Иванов OR Folk.name = Сидоров"/>
             </bean>
         </property>
         <property name="expectedResult">
             <util:list>
                 <value>1</value>
+                <value>2</value>
             </util:list>
         </property>
     </bean>

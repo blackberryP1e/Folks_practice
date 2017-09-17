@@ -5,10 +5,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="toSearchDescriptor.test_10" parent="toSearchDescriptor">
+    <bean id="toSearchDescriptor.test_s_99_skipped_test" parent="toSearchDescriptor">
         <property name="entityQuery">
             <bean class="ru.olgak.folks.api.search.EntityQuery">
-                <property name="search" value="Иванов"/>
+                <property name="search" value="Иванова Мария"/>
             </bean>
         </property>
         <property name="expectedResult">
