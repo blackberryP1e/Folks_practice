@@ -2,18 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:hfl="http://www.hflabs.ru/schema/hfl-beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-       http://www.hflabs.ru/schema/hfl-beans http://www.hflabs.ru/schema/hfl-beans/hfl-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.hflabs.ru/schema/hfl-beans http://www.hflabs.ru/schema/hfl-beans/hfl-beans.xsd">
 
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <bean id="testDBInitializer" class="ru.hflabs.util.test.db.DBInitPostProcessor">
-        <property name="jdbcTemplateBeanName">
-            <idref bean="jdbcTemplate"/>
+    <bean id="testDBInitializer" class="ru.hflabs.util.test.extension.db.ScriptOperationsProcessor">
+        <property name="transactionManager">
+            <idref bean="transactionManager"/>
         </property>
-        <property name="scripts">
+        <property name="resources">
             <list>
                 <hfl:sql-script location="schema.sql"/>
             </list>

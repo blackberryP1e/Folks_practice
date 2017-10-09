@@ -8,7 +8,7 @@
     <bean id="toSearchDescriptor.test_se_02_ext_search_OR_by_1_field" parent="toSearchDescriptor">
         <property name="entityQuery">
             <bean class="ru.olgak.folks.api.search.EntityQuery">
-                <property name="search" value="? Folk.name = Иванов OR Folk.name = Сидоров"/>
+                <property name="search" value="? Folk.surname = Иванов OR Folk.name = Иван"/>
             </bean>
         </property>
         <property name="expectedResult">

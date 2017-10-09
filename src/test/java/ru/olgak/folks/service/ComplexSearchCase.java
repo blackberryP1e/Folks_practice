@@ -13,7 +13,9 @@ import org.testng.annotations.Test;
 import ru.hflabs.util.core.Pair;
 import ru.hflabs.util.io.IOUtils;
 import ru.hflabs.util.spring.Assert;
-import ru.hflabs.util.test.DataBaseContextTests;
+import ru.hflabs.util.test.ITestCaseExecutor;
+import ru.hflabs.util.test.database.DataBaseTestDescriptor;
+import ru.hflabs.util.test.definition.TestCaseDefinition;
 import ru.olgak.folks.api.Folk;
 import ru.olgak.folks.api.search.EntityFieldFilter;
 import ru.olgak.folks.api.search.EntityQuery;
@@ -26,14 +28,14 @@ import java.util.*;
 
 import static java.lang.String.format;
 import static org.testng.Assert.fail;
-import static ru.hflabs.util.test.db.DBUnitHelper.createDataSet;
+import static ru.hflabs.util.test.support.DataSetHelper.createDataSet;
 
 /**
  * Класс <class>ComplexSearchFTCase</class> реализует комплексный тест для поиска, фильтрации и сортировки контрагентов
  *
  * @author nikolaig
  */
-public class ComplexSearchCase extends FeatureCase implements FeatureCase.ExecuteTestCallback<ComplexSearchCase.ToComplexSearchDescriptor> {
+public class ComplexSearchCase extends FeatureCase implements ITestCaseExecutor<ComplexSearchCase.ToComplexSearchDescriptor> {
 
     @Resource(name = "searchService")
     private SearchService<Folk> searchService;
@@ -91,22 +93,21 @@ public class ComplexSearchCase extends FeatureCase implements FeatureCase.Execut
             })
             .build();
 
-
     @Test(
             description = "Поиск контрагентов. Комплексный тест",
             dataProvider = "createTestCases"
     )
-    public void testSearch(final DataBaseContextTests.TestParametersDescriptor descriptor) throws Exception {
+    public void testSearch(final DataBaseTestDescriptor<ToComplexSearchDescriptor> descriptor) throws Exception {
         executeTest(this, descriptor);
     }
 
     @Override
-    public void executeTestMethod(DataBaseContextTests.TestParametersDescriptor<ToComplexSearchDescriptor> descriptor) throws Exception {
+    public void executeTestMethod(DataBaseTestDescriptor<ToComplexSearchDescriptor> descriptor) throws Exception {
         LOG.info("Rebuild search index...");
         // Перестраиваем
         searchService.rebuild();
         // Загружаем эталонные данные
-        IDataSet dataSet = createDataSet(new File[]{new File(descriptor.directory + "/" + "etalon.xls")});
+        IDataSet dataSet = createDataSet(new File[]{new File(descriptor.parametersDirectory, "etalon.xls")});
         // Простой поиск
         SearchGroup search = extractSearchGroup(dataSet, SEARCH);
         // Продвинутый поиск
@@ -123,8 +124,8 @@ public class ComplexSearchCase extends FeatureCase implements FeatureCase.Execut
         allGroups.add(advancedSearch);
         allGroups.add(sorting);
         // Если задан конкретный кейс, то проверяем его
-        if (descriptor.testSpecificDescriptor != null && descriptor.testSpecificDescriptor.searchCase != null) {
-            checkConcreteSearchCase(allGroups, descriptor.testSpecificDescriptor.searchCase, descriptor.caseName);
+        if (descriptor.testCaseDefinition != null && descriptor.testCaseDefinition.searchCase != null) {
+            checkConcreteSearchCase(allGroups, descriptor.testCaseDefinition.searchCase, descriptor.getCaseName());
         } else {
             // Проверяем атомарные кейсы
             LOG.info("=================== Check atomic cases");
@@ -137,7 +138,7 @@ public class ComplexSearchCase extends FeatureCase implements FeatureCase.Execut
             }
             // Если есть ошибки, то сложные кейсы не прогоняем
             if (atomicAssertStringBuilder.toString().contains("failed")) {
-                fail(format("Case '%s' failed.\n%s", descriptor.caseName, atomicAssertStringBuilder.toString()));
+                fail(format("Case '%s' failed.\n%s", descriptor.getCaseName(), atomicAssertStringBuilder.toString()));
             }
             // Проверяем сложные комбинаторные кейсы
             // Перемешиваем атомарные кейсы во всех группах
@@ -153,7 +154,7 @@ public class ComplexSearchCase extends FeatureCase implements FeatureCase.Execut
             LOG.info("=================== Check triple combinations");
             checkTripleCombinations(allGroups, conflictingGroups, combinedAssertStringBuilder);
             if (!combinedAssertStringBuilder.toString().isEmpty()) {
-                fail(format("Case '%s' failed.\n%s", descriptor.caseName, combinedAssertStringBuilder.toString()));
+                fail(format("Case '%s' failed.\n%s", descriptor.getCaseName(), combinedAssertStringBuilder.toString()));
             }
         }
     }
@@ -418,7 +419,7 @@ public class ComplexSearchCase extends FeatureCase implements FeatureCase.Execut
     }
 
     /** Класс <class>ToComplexSearchDescriptor</class> описывает дескриптор поиска контрагентов */
-    public static final class ToComplexSearchDescriptor extends DataBaseContextTests.TestSpecificDescriptor {
+    public static final class ToComplexSearchDescriptor extends TestCaseDefinition {
 
         /** Конкретный кейс */
         public final String searchCase;

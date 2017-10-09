@@ -6,8 +6,8 @@
     <parent>
         <groupId>ru.hflabs</groupId>
         <artifactId>parent</artifactId>
-        <version>4.0-SNAPSHOT</version>
-        <relativePath>lib/ru/hflabs/parent/4.0-SNAPSHOT/parent-4.0-20170829.091629-1.pom</relativePath>
+        <version>15.0-SNAPSHOT</version>
+        <relativePath>lib/ru/hflabs/parent/15.0-SNAPSHOT/parent-15.0-20171004.172905-1.pom</relativePath>
     </parent>
 
     <groupId>ru.olgak</groupId>
@@ -20,7 +20,7 @@
 
     <properties>
         <hibernate.version>4.2.2.Final</hibernate.version>
-        <ru.hflabs.util.version>1.5.1-SNAPSHOT</ru.hflabs.util.version>
+        <ru.hflabs.util.version>1.7.7-SNAPSHOT</ru.hflabs.util.version>
         <maven.checkstyle.skip>true</maven.checkstyle.skip>
     </properties>
 
@@ -42,7 +42,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.10</version>
+                <version>2.17</version>
                 <executions>
                     <execution>
                         <id>checkstyle</id>
@@ -75,6 +75,31 @@
     <dependencies>
 
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.16</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- ########################################################################################## -->
+
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
@@ -87,9 +112,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-queryparser</artifactId>
-            <version>${lucene.version}</version>
+            <groupId>ru.hflabs</groupId>
+            <artifactId>utils-spring</artifactId>
+            <version>${ru.hflabs.util.version}</version>
         </dependency>
 
         <dependency>
@@ -99,49 +124,12 @@
         </dependency>
 
         <dependency>
-            <groupId>ru.hflabs</groupId>
-            <artifactId>utils-test</artifactId>
-            <version>${ru.hflabs.util.version}</version>
-            <scope>test</scope>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>${lucene.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.swift.common</groupId>
-            <artifactId>jira-soap</artifactId>
-            <version>4.4.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>ru.hflabs</groupId>
-            <artifactId>utils-core</artifactId>
-            <version>${ru.hflabs.util.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ru.hflabs</groupId>
-            <artifactId>utils-io</artifactId>
-            <version>${ru.hflabs.util.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ru.hflabs</groupId>
-            <artifactId>utils-spring</artifactId>
-            <version>${ru.hflabs.util.version}</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>${hsqldb.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-        </dependency>
+        <!-- ########################################################################################## -->
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -188,31 +176,51 @@
         </dependency>
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jul-to-slf4j</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
             <groupId>aopalliance</groupId>
             <artifactId>aopalliance</artifactId>
             <version>1.0</version>
         </dependency>
+
+        <!-- ########################################################################################## -->
+
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.16.16</version>
-            <scope>provided</scope>
+            <groupId>ru.hflabs</groupId>
+            <artifactId>utils-dbunit</artifactId>
+            <version>${ru.hflabs.util.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.hflabs</groupId>
+            <artifactId>utils-test</artifactId>
+            <version>${ru.hflabs.util.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.swift.common</groupId>
+            <artifactId>jira-soap</artifactId>
+            <version>5.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

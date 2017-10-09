@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- Тест нужен для проверки того, что КАЖДОЕ поле попало в поисковый индекс.
+         То, что сами аннотации работают, проверяется в первом же тесте на простой или расширенный поиск.
+
+         А в этом тесте у меня в dbStart заполнены ВСЕ поля (заодно показывают студентам пример заполнения)
+         И я просто меняю условие поиска и прогоняю тест по каждому полю. Без этого я бы не обнаружила, например,
+         что тип boolean не поддерживался. Так что проверить только на строковом поле - недостаточно :)
+     -->
+    <bean id="toSearchDescriptor.test_00_all_fields_debug_test" parent="toSearchDescriptor">
+        <property name="entityQuery">
+            <bean class="ru.olgak.folks.api.search.EntityQuery">
+                <!--
+                 ? Device.author = Анечка
+                 -->
+                <property name="search" value="? Folk.averageRating = 5.7"/>
+            </bean>
+        </property>
+        <property name="expectedResult">
+            <util:list>
+                <value>1</value>
+            </util:list>
+        </property>
+    </bean>
+
+</beans>

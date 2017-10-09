@@ -4,8 +4,8 @@
   <artifactId>utils-lucene</artifactId>
   <versioning>
     <versions>
-      <version>1.5.1-SNAPSHOT</version>
+      <version>1.7.7-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20170822163649</lastUpdated>
+    <lastUpdated>20171004155938</lastUpdated>
   </versioning>
 </metadata>

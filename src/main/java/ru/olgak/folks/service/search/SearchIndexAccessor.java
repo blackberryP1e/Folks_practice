@@ -98,7 +98,7 @@ public class SearchIndexAccessor implements LuceneIndexManager {
         // Проверяем, что индекс записи создан
         if (indexWriter == null) {
             try {
-                indexWriter = new IndexWriter(indexDirectory.first, new IndexWriterConfig(Version.LUCENE_42, analyzer));
+                indexWriter = new IndexWriter(indexDirectory.first, new IndexWriterConfig(analyzer));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -165,8 +165,6 @@ public class SearchIndexAccessor implements LuceneIndexManager {
                 commitWriter(writer, -1);
             }
         }
-        // Выполняем разблокирование директории индекса
-        LuceneUtil.unlockIndexDirectory(indexDirectory.first);
         // Создаем слушателя удаления не используемых файлов
         deleteUnusedFilesListener = new DeleteUnusedFilesListener();
     }

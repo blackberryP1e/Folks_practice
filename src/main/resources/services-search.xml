@@ -2,19 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-
-    <!-- Версия Lucene -->
-    <util:constant id="luceneVersion" static-field="org.apache.lucene.util.Version.LUCENE_42"/>
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!-- Анализатор индекса -->
     <bean id="luceneAnalyzer" class="org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper">
         <constructor-arg type="org.apache.lucene.analysis.Analyzer">
-            <bean class="ru.hflabs.util.lucene.analysis.KeywordLowerCaseAnalyzer">
-                <constructor-arg type="org.apache.lucene.util.Version" ref="luceneVersion"/>
-            </bean>
+            <bean class="ru.hflabs.util.lucene.analysis.KeywordLowerCaseAnalyzer"/>
         </constructor-arg>
         <constructor-arg type="java.util.Map">
             <util:map key-type="java.lang.String" value-type="org.apache.lucene.analysis.Analyzer">
@@ -22,9 +16,7 @@
                     <key>
                         <util:constant static-field="ru.hflabs.util.lucene.LuceneBinderTransformer.DEFAULT_SEARCH_FIELD"/>
                     </key>
-                    <bean class="ru.hflabs.util.lucene.analysis.WhitespaceLowerCaseAnalyzer">
-                        <constructor-arg type="org.apache.lucene.util.Version" ref="luceneVersion"/>
-                    </bean>
+                    <bean class="ru.hflabs.util.lucene.analysis.WhitespaceLowerCaseAnalyzer"/>
                 </entry>
             </util:map>
         </constructor-arg>

@@ -7,6 +7,9 @@ import org.testng.annotations.Test;
 import ru.hflabs.util.core.Pair;
 import ru.hflabs.util.io.IOUtils;
 import ru.hflabs.util.test.DataBaseContextTests;
+import ru.hflabs.util.test.ITestCaseExecutor;
+import ru.hflabs.util.test.database.DataBaseTestDescriptor;
+import ru.hflabs.util.test.definition.TestCaseDefinition;
 import ru.olgak.folks.api.Folk;
 import ru.olgak.folks.api.search.EntityQuery;
 import ru.olgak.folks.api.search.SearchService;
@@ -21,9 +24,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
 /** Класс <class>SearchCase</class> */
-
-public class SearchCase extends FeatureCase implements DataBaseContextTests.ExecuteTestCallback<SearchCase.ToSearchDescriptor> {
-
+public class SearchCase extends FeatureCase implements ITestCaseExecutor<SearchCase.ToSearchDescriptor> {
 
     @Resource(name = "searchService")
     private SearchService<Folk> searchService;
@@ -42,17 +43,17 @@ public class SearchCase extends FeatureCase implements DataBaseContextTests.Exec
             description = "Поиск контрагентов",
             dataProvider = "createTestCases"
     )
-    public void testSearch(final DataBaseContextTests.TestParametersDescriptor descriptor) throws Exception {
+    public void testSearch(final DataBaseTestDescriptor descriptor) throws Exception {
         executeTest(this, descriptor);
     }
 
     @Override
-    public void executeTestMethod(TestParametersDescriptor<ToSearchDescriptor> descriptor) throws Exception {
+    public void executeTestMethod(DataBaseTestDescriptor<ToSearchDescriptor> descriptor) throws Exception {
         LOG.info("Rebuild search index...");
         // Перестраиваем
         searchService.rebuild();
 
-        ToSearchDescriptor toSearchDescriptor = descriptor.testSpecificDescriptor;
+        ToSearchDescriptor toSearchDescriptor = descriptor.getTestCaseDefinition();
         // Выполняем поиск идентификаторов контрагентов
         List<Long> result = Lists.transform(searchService.findEntities(toSearchDescriptor.entityQuery), new Function<Folk, Long>() {
             @Override
@@ -68,17 +69,17 @@ public class SearchCase extends FeatureCase implements DataBaseContextTests.Exec
             if (StringUtils.hasText(toSearchDescriptor.entityQuery.getSortOrderKey()) && !SortOrder.UNSORTED.equals(toSearchDescriptor.entityQuery.getSortOrderValue())) {
                 String expectedOrder = StringUtils.collectionToDelimitedString(toSearchDescriptor.getExpectedResult(), ";");
                 String actualOrder = StringUtils.collectionToDelimitedString(result, ";");
-                assertEquals(actualOrder, expectedOrder, String.format("Case '%s' failed. expected order: <%s> but was: <%s>", descriptor.caseName, expectedOrder, actualOrder));
+                assertEquals(actualOrder, expectedOrder, String.format("Case '%s' failed. expected order: <%s> but was: <%s>", descriptor.getCaseName(), expectedOrder, actualOrder));
             }
         } else {
             fail(
-                    String.format("Case '%s' failed. Different number of parties:", descriptor.caseName) + IOUtils.LINE_SEPARATOR + assertMessage
+                    String.format("Case '%s' failed. Different number of parties:", descriptor.getCaseName()) + IOUtils.LINE_SEPARATOR + assertMessage
             );
         }
     }
 
     /** Класс <class>ToSearchDescriptor</class> описывает дескриптор поиска контрагентов */
-    public static final class ToSearchDescriptor extends TestSpecificDescriptor {
+    public static final class ToSearchDescriptor extends TestCaseDefinition {
 
         /** Запрос поиска */
         public EntityQuery entityQuery;

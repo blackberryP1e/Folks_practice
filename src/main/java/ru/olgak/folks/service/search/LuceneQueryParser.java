@@ -1,16 +1,15 @@
 package ru.olgak.folks.service.search;
+
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.document.FieldType;
 import org.apache.lucene.queryparser.flexible.precedence.PrecedenceQueryParser;
 import org.apache.lucene.queryparser.flexible.standard.StandardQueryParser;
 import org.apache.lucene.queryparser.flexible.standard.config.NumberDateFormat;
-import org.apache.lucene.queryparser.flexible.standard.config.NumericConfig;
+import org.apache.lucene.queryparser.flexible.standard.config.PointsConfig;
 import org.apache.lucene.queryparser.flexible.standard.config.StandardQueryConfigHandler;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.util.NumericUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hflabs.util.core.date.DateUtil;
@@ -20,7 +19,10 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Класс <class>LuceneQueryParser</class> реализует сервис разбора текстового запроса
@@ -32,11 +34,9 @@ public class LuceneQueryParser {
     /** Класс логирования */
     private final Logger LOG = LoggerFactory.getLogger(getClass());
     /** Запрос с пустым результатом */
-    private static final Query EMPTY_QUERY = new BooleanQuery() {
-        {
-            add(new MatchAllDocsQuery(), BooleanClause.Occur.MUST_NOT);
-        }
-    };
+    private static final Query EMPTY_QUERY = new BooleanQuery.Builder()
+            .add(new MatchAllDocsQuery(), BooleanClause.Occur.MUST_NOT)
+            .build();
 
     /** Анализатор индекса */
     private final Analyzer luceneAnalyzer;
@@ -44,7 +44,6 @@ public class LuceneQueryParser {
     public LuceneQueryParser(Analyzer luceneAnalyzer) {
         this.luceneAnalyzer = luceneAnalyzer;
     }
-
 
     /**
      * Создает и возвращает сервис разбора запросов
@@ -57,31 +56,31 @@ public class LuceneQueryParser {
         queryParser.setDefaultOperator(StandardQueryConfigHandler.Operator.AND);
         // Настройка разбора
         {
-            final Map<String, NumericConfig> numericConfigs = new LinkedHashMap<String, NumericConfig>();
+            final Map<String, PointsConfig> numericConfigs = new LinkedHashMap<>();
             for (SearchBinderFactory.SearchableField field : fields) {
                 NumberFormat numberFormat = null;
-                FieldType.NumericType numericType = null;
+                Class<? extends Number> numericType = null;
                 if (Integer.class.isAssignableFrom(field.getType())) {
                     numberFormat = NumberFormat.getNumberInstance();
-                    numericType = FieldType.NumericType.INT;
+                    numericType = Integer.class;
                 } else if (Long.class.isAssignableFrom(field.getType())) {
                     numberFormat = NumberFormat.getNumberInstance();
-                    numericType = FieldType.NumericType.LONG;
+                    numericType = Long.class;
                 } else if (BigDecimal.class.isAssignableFrom(field.getType())) {
                     numberFormat = getDecimalFormat();
-                    numericType = FieldType.NumericType.DOUBLE;
+                    numericType = Double.class;
                 } else if (Date.class.isAssignableFrom(field.getType())) {
                     numberFormat = new NumberDateFormat(new SimpleDateFormat(DateUtil.DATE_PATTERN));
-                    numericType = FieldType.NumericType.LONG;
+                    numericType = Long.class;
                 }
                 if (numberFormat != null) {
                     numericConfigs.put(
                             field.getName(),
-                            new NumericConfig(NumericUtils.PRECISION_STEP_DEFAULT, numberFormat, numericType)
+                            new PointsConfig(numberFormat, numericType)
                     );
                 }
             }
-            queryParser.setNumericConfigMap(numericConfigs);
+            queryParser.setPointsConfigMap(numericConfigs);
         }
         // Возвращаем настроенный сервис
         return queryParser;

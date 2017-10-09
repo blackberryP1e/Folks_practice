@@ -1,11 +1,13 @@
 package ru.olgak.folks.service.search;
 
+import com.google.common.collect.ImmutableSet;
+import lombok.Setter;
 import org.apache.lucene.document.DocumentStoredFieldVisitor;
-import org.apache.lucene.index.FieldInfo;
 import org.apache.lucene.search.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;
 import ru.hflabs.util.lucene.*;
+import ru.olgak.folks.api.Device;
 import ru.olgak.folks.api.Folk;
 import ru.olgak.folks.api.search.EntityFieldFilter;
 import ru.olgak.folks.api.search.EntityQuery;
@@ -28,8 +30,8 @@ import static ru.hflabs.util.lucene.LuceneQueryUtil.rewriteBooleanQuery;
  *
  * @author nikolaig
  */
+@Setter
 public class FolkLuceneSearchService implements SearchService<Folk>, InitializingBean {
-
 
     /** Трансформер поисковой сущности */
     private SearchBinderTemplate<Folk> searchBinder;
@@ -46,23 +48,12 @@ public class FolkLuceneSearchService implements SearchService<Folk>, Initializin
     /** Сервис разбора запросов */
     private LuceneQueryParser queryParser;
 
-
     public void setSearchBinderFactory(SearchBinderFactory<Folk> searchBinderFactory) {
         this.searchBinder = searchBinderFactory.createSearchBinder(Folk.class);
-        this.filteredFields = searchBinderFactory.getBinderFields(Folk.class, SearchBinderFactory.SearchableField.FILTERABLE);
-    }
-
-    public void setAccessor(SearchIndexAccessor accessor) {
-        this.accessor = accessor;
-    }
-
-
-    public void setFolkRepository(FolkRepository folkRepository) {
-        this.folkRepository = folkRepository;
-    }
-
-    public void setQueryParser(LuceneQueryParser queryParser) {
-        this.queryParser = queryParser;
+        this.filteredFields = ImmutableSet.<SearchBinderFactory.SearchableField>builder()
+                .addAll(searchBinderFactory.getBinderFields(Folk.class, SearchBinderFactory.SearchableField.FILTERABLE))
+                .addAll(searchBinderFactory.getBinderFields(Device.class, SearchBinderFactory.SearchableField.FILTERABLE))
+                .build();
     }
 
     @Override
@@ -104,30 +95,30 @@ public class FolkLuceneSearchService implements SearchService<Folk>, Initializin
     }
 
     /**
-         * Проверяет и выполняет обновление менеджера поиска
-         *
-         * @return Возвращает актуальный менеджера поиска
-         */
-        private SearcherManager refreshSearcherManager(boolean force) {
-            try {
-                // Проверяем актуальность менеджера
-                if (force || !searcherManager.isSearcherCurrent()) {
-                    // Пытаемся заблокировать менеджер
-                    if (searcherManager.maybeRefresh()) {
-                        // Выполняем обновление общего количества объектов
-                    } else {
-                        // Выполняем принудительную блокировку, т.к. другой поток уже выполняет обновление
-                        searcherManager.maybeRefreshBlocking();
-                    }
+     * Проверяет и выполняет обновление менеджера поиска
+     *
+     * @return Возвращает актуальный менеджера поиска
+     */
+    private SearcherManager refreshSearcherManager(boolean force) {
+        try {
+            // Проверяем актуальность менеджера
+            if (force || !searcherManager.isSearcherCurrent()) {
+                // Пытаемся заблокировать менеджер
+                if (searcherManager.maybeRefresh()) {
+                    // Выполняем обновление общего количества объектов
+                } else {
+                    // Выполняем принудительную блокировку, т.к. другой поток уже выполняет обновление
+                    searcherManager.maybeRefreshBlocking();
                 }
-                return searcherManager;
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
             }
+            return searcherManager;
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
+    }
 
     private LuceneQueryDescriptor createQuery(EntityQuery entityQuery) {
-        final BooleanQuery query = new BooleanQuery();
+        final BooleanQuery.Builder query = new BooleanQuery.Builder();
         // Проверяем что фильтр задан
         if (entityQuery != null) {
             // Добавляем критерий поиска
@@ -145,7 +136,7 @@ public class FolkLuceneSearchService implements SearchService<Folk>, Initializin
         // Создаем сортировку
         Set<SortField> sortFields = buildOrder(Folk.class, entityQuery != null ? entityQuery.getSortOrderKey() : null, entityQuery != null ? entityQuery.getSortOrderValue() : null);
         // Пересоздаем запрос
-        Query resultQuery = rewriteBooleanQuery(query);
+        Query resultQuery = rewriteBooleanQuery(query.build());
         // Формируем и возвращает созданную пару
         resultQuery = resultQuery != null ? resultQuery : new MatchAllDocsQuery();
         Sort sort = sortFields != null && !sortFields.isEmpty() ? new Sort(sortFields.toArray(new SortField[sortFields.size()])) : null;
@@ -157,25 +148,26 @@ public class FolkLuceneSearchService implements SearchService<Folk>, Initializin
         final Set<SortField> sortFields = new LinkedHashSet<SortField>(2);
         // Формируем сортировку
         if (StringUtils.hasText(orderKey) && orderValue != SortOrder.UNSORTED) {
+            boolean revers = orderValue != null && orderValue == SortOrder.DESCENDING;
             // Получаем поле сортировки
             SearchBinderFactory.SearchableField searchableField = getSearchableField(orderKey);
             // Формируем тип сортировки
-            SortField.Type sortFieldType;
+            final SortField sortField;
             if (Integer.class.isAssignableFrom(searchableField.getType())) {
-                sortFieldType = SortField.Type.INT;
+                sortField = new SortedNumericSortField(searchableField.getName(), SortField.Type.INT, revers);
             } else if (Long.class.isAssignableFrom(searchableField.getType())) {
-                sortFieldType = SortField.Type.LONG;
+                sortField = new SortedNumericSortField(searchableField.getName(), SortField.Type.LONG, revers);
             } else if (BigDecimal.class.isAssignableFrom(searchableField.getType())) {
-                sortFieldType = SortField.Type.DOUBLE;
+                sortField = new SortedNumericSortField(searchableField.getName(), SortField.Type.DOUBLE, revers);
             } else if (Date.class.isAssignableFrom(searchableField.getType())) {
-                sortFieldType = SortField.Type.LONG;
+                sortField = new SortedNumericSortField(searchableField.getName(), SortField.Type.LONG, revers);
             } else {
-                sortFieldType = SortField.Type.STRING;
+                sortField = new SortField(searchableField.getName(), SortField.Type.STRING, revers);
             }
-            sortFields.add(new SortField(searchableField.getName(), sortFieldType, orderValue != null && orderValue == SortOrder.DESCENDING));
+            sortFields.add(sortField);
             // Формируем сортировку по умолчанию
             if (!SearchBinderTemplate.ID_FIELD_NAME.equals(orderKey)) {
-                sortFields.add(new SortField(getSearchableField(SearchBinderTemplate.ID_FIELD_NAME).getName(), SortField.Type.LONG));
+                sortFields.add(new SortedNumericSortField(getSearchableField(SearchBinderTemplate.ID_FIELD_NAME).getName(), SortField.Type.LONG));
             }
         }
         // Возвращаем результат
@@ -207,17 +199,17 @@ public class FolkLuceneSearchService implements SearchService<Folk>, Initializin
                     if (Date.class.isAssignableFrom(searchableField.getType())) {
                         filterQuery = createTermQuery(searchableField.getName(), LuceneUtil.DATE_MIN_NULL_VALUE);
                     } else {
-                        final BooleanQuery query = new BooleanQuery();
+                        final BooleanQuery.Builder query = new BooleanQuery.Builder();
                         query.add(new MatchAllDocsQuery(), BooleanClause.Occur.MUST);
                         query.add(new TermRangeQuery(searchableField.getName(), null, null, true, true), BooleanClause.Occur.MUST_NOT);
-                        filterQuery = query;
+                        filterQuery = query.build();
                     }
                 } else if (value instanceof EntityFieldFilter.NotEmptyValue) {
                     if (Date.class.isAssignableFrom(searchableField.getType())) {
-                        final BooleanQuery query = new BooleanQuery();
+                        final BooleanQuery.Builder query = new BooleanQuery.Builder();
                         query.add(new MatchAllDocsQuery(), BooleanClause.Occur.MUST);
                         query.add(createTermQuery(searchableField.getName(), LuceneUtil.DATE_MIN_NULL_VALUE), BooleanClause.Occur.MUST_NOT);
-                        filterQuery = query;
+                        filterQuery = query.build();
                     } else {
                         filterQuery = new TermRangeQuery(searchableField.getName(), null, null, true, true);
                     }
@@ -240,7 +232,7 @@ public class FolkLuceneSearchService implements SearchService<Folk>, Initializin
                 String directQuery = directQueryMatcher.group(1).trim();
                 return !directQuery.isEmpty() ? queryParser.parseQuery(directQuery, filteredFields) : null;
             } else {
-                final BooleanQuery query = new BooleanQuery();
+                final BooleanQuery.Builder query = new BooleanQuery.Builder();
                 // Разбиваем строку поиска по отдельным словам
                 final Set<String> words = new LinkedHashSet<String>(Arrays.asList(search.replaceAll("\\s+", " ").split(" ")));
                 // Формируем запросы для каждого слова
@@ -251,12 +243,11 @@ public class FolkLuceneSearchService implements SearchService<Folk>, Initializin
                     }
                 }
                 // Переформировываем и возвращаем запрос поиска
-                return rewriteBooleanQuery(query);
+                return rewriteBooleanQuery(query.build());
             }
         }
         return null;
     }
-
 
     private Query buildFilterByPatternValue(Class<?> searchableType, String searchableField, EntityFieldFilter.PatternValue value) {
         String patternValue = value.getPattern();
@@ -273,20 +264,5 @@ public class FolkLuceneSearchService implements SearchService<Folk>, Initializin
             }
         }
         return createTermQuery(searchableField, patternValue.toLowerCase());
-    }
-
-    /**
-     * Класс <class>DefaultStoredFieldVisitor</class> реализует фильтр загружаемых полей по умолчанию
-     *
-     * @author Nazin Alexander
-     */
-    private static class DefaultStoredFieldVisitor extends DocumentStoredFieldVisitor {
-
-        @Override
-        public Status needsField(FieldInfo fieldInfo) throws IOException {
-            return fieldInfo.name.contains(SearchBinderTemplate.OBJECT_FIELD) ?
-                    Status.YES :
-                    Status.NO;
-        }
     }
 }
