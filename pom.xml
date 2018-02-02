@@ -12,7 +12,7 @@
 
     <groupId>ru.olgak</groupId>
     <artifactId>folks</artifactId>
-    <version>Y-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
