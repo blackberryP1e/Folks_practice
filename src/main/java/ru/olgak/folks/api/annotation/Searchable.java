@@ -17,7 +17,7 @@ public @interface Searchable {
     /** Участвует в полнотекстовом поиске */
     boolean search() default false;
 
-    /** Возможна фильтракция и расширенный поиск */
+    /** Возможна фильтрация и расширенный поиск */
     boolean filter() default false;
 
     /** Возможна сортировка */

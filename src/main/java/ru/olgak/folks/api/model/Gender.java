@@ -1,7 +1,7 @@
 package ru.olgak.folks.api.model;
 
 /**
- * Класс <class>ThreeStateStatus</class> реализует перечисление Да-Нет-Не_знаю
+ * Класс <class>Gender</class> реализует пол клиента
  */
 public enum Gender {
 
