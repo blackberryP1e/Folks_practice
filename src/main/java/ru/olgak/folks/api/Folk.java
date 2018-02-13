@@ -1,10 +1,10 @@
 package ru.olgak.folks.api;
 
-import org.hibernate.annotations.Type;
-import ru.olgak.folks.api.annotation.Searchable;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import ru.hflabs.util.core.PartsJoiner;
+import ru.olgak.folks.api.annotation.Searchable;
 import ru.olgak.folks.api.model.Gender;
 import ru.olgak.folks.api.model.ThreeStateStatus;
 
@@ -81,4 +81,13 @@ public class Folk extends AbstractEntity {
     // Средний рейтинг участника
     @Searchable(filter = true)
     private BigDecimal averageRating;
+
+    @Searchable(filter = true)
+    public String getFio() {
+        return new PartsJoiner(" ")
+                .add(getSurname())
+                .add(getName())
+                .add(getPatronymic())
+                .toString();
+    }
 }

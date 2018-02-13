@@ -2,6 +2,7 @@ package ru.olgak.folks.service.search;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+import lombok.ToString;
 import org.apache.lucene.document.*;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.index.IndexableField;
@@ -18,7 +19,7 @@ import ru.olgak.folks.api.annotation.Searchable;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -71,28 +72,28 @@ public class SearchBinderFactory<E extends Folk> {
                 for (SearchableField field : binderClassesHolder.getValue(binderClass)) {
                     // Обрабатываем поля в зависимости от его типа
                     if (CharSequence.class.isAssignableFrom(field.getType())) {
-                        filterField = new TextField(field.getName(), FormatUtil.format((String) ReflectionUtil.get(field.getField(), entity)), Store.NO);
+                        filterField = new TextField(field.getName(), FormatUtil.format((String) getFieldValue(entity, field)), Store.NO);
                         searchField = filterField;
                     } else if (Integer.class.isAssignableFrom(field.getType())) {
-                        int value = integerToPrimitive((Integer) ReflectionUtil.get(field.getField(), entity));
+                        int value = integerToPrimitive((Integer) getFieldValue(entity, field));
                         filterField = new NumericDocValuesField(field.getName(), value);
                         searchField = new IntPoint(field.getName(), value);
                     } else if (Long.class.isAssignableFrom(field.getType())) {
-                        long value = longToPrimitive((Long) ReflectionUtil.get(field.getField(), entity));
+                        long value = longToPrimitive((Long) getFieldValue(entity, field));
                         filterField = new NumericDocValuesField(field.getName(), value);
                         searchField = new LongPoint(field.getName(), value);
                     } else if (BigDecimal.class.isAssignableFrom(field.getType())) {
-                        double value = bigDecimalToPrimitive((BigDecimal) ReflectionUtil.get(field.getField(), entity));
+                        double value = bigDecimalToPrimitive((BigDecimal) getFieldValue(entity, field));
                         filterField = new DoubleDocValuesField(field.getName(), value);
                         searchField = new DoublePoint(field.getName(), value);
                     } else if (Boolean.class.isAssignableFrom(field.getType())) {
-                        filterField = new StringField(field.getName(), FormatUtil.format((Boolean) ReflectionUtil.get(field.getField(), entity)), Store.NO);
+                        filterField = new StringField(field.getName(), FormatUtil.format((Boolean) getFieldValue(entity, field)), Store.NO);
                         searchField = filterField;
                     } else if (Enum.class.isAssignableFrom(field.getType())) {
-                        filterField = new TextField(field.getName(), FormatUtil.format((Enum) ReflectionUtil.get(field.getField(), entity), false), Store.NO);
+                        filterField = new TextField(field.getName(), FormatUtil.format((Enum) getFieldValue(entity, field), false), Store.NO);
                         searchField = filterField;
                     } else if (Date.class.isAssignableFrom(field.getType())) {
-                        long value = dateToLong((Date) ReflectionUtil.get(field.getField(), entity));
+                        long value = dateToLong((Date) getFieldValue(entity, field));
                         filterField = new NumericDocValuesField(field.getName(), value);
                         searchField = new LongPoint(field.getName(), value);
                     } else {
@@ -109,7 +110,7 @@ public class SearchBinderFactory<E extends Folk> {
                     // Добавляем поле поиска
                     if (field.isStateEstablished(SearchableField.SEARCHABLE)) {
                         if (Date.class.isAssignableFrom(field.getType())) {
-                            defaultSearchFields.add(new TextField(field.getName(), DateUtil.formatDate((Date) ReflectionUtil.get(field.getField(), entity)), Store.NO));
+                            defaultSearchFields.add(new TextField(field.getName(), DateUtil.formatDate((Date) getFieldValue(entity, field)), Store.NO));
                         } else {
                             defaultSearchFields.add(searchField);
                         }
@@ -141,6 +142,15 @@ public class SearchBinderFactory<E extends Folk> {
         };
     }
 
+    private Object getFieldValue(Object entity, SearchableField field) throws IllegalAccessException {
+        try {
+            return field.getField() instanceof Field ? ReflectionUtil.get((java.lang.reflect.Field) field.getField(), entity) :
+                    ((Method) field.getField()).invoke(entity);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Collection<SearchableField> getBinderFields(Class<?> binderClass, final int... states) {
         return Collections2.filter(binderClassesHolder.getValue(binderClass), new Predicate<SearchableField>() {
             @Override
@@ -161,9 +171,14 @@ public class SearchBinderFactory<E extends Folk> {
      * @param field проверяемое поле
      * @return Возвращает <code>TRUE</code>, если поле может участвовать в поиске
      */
-    protected boolean isSearchableField(Field field) {
-        Searchable annotation = field.getAnnotation(Searchable.class);
+    protected boolean isSearchableField(Member field) {
+        Searchable annotation = getSearchableAnno(field);
         return annotation != null && annotation.search();
+    }
+
+    private Searchable getSearchableAnno(Member field) {
+        return field instanceof Field ? ((Field) field).getAnnotation(Searchable.class)
+                : ((Method) field).getAnnotation(Searchable.class);
     }
 
     /**
@@ -172,8 +187,8 @@ public class SearchBinderFactory<E extends Folk> {
      * @param field проверяемое поле
      * @return Возвращает <code>TRUE</code>, если поле может участвовать в фильтрации
      */
-    protected boolean isFilterableField(Field field) {
-        Searchable annotation = field.getAnnotation(Searchable.class);
+    protected boolean isFilterableField(Member field) {
+        Searchable annotation = getSearchableAnno(field);
         if (annotation != null && (annotation.filter() || annotation.sort())) {
             return true;
         }
@@ -186,8 +201,8 @@ public class SearchBinderFactory<E extends Folk> {
      * @param field проверяемое поле
      * @return Возвращает <code>TRUE</code>, если поле может участвовать в сортировке
      */
-    protected boolean isSortableField(Field field) {
-        Searchable annotation = field.getAnnotation(Searchable.class);
+    protected boolean isSortableField(Member field) {
+        Searchable annotation = getSearchableAnno(field);
         if (annotation != null && annotation.sort()) {
             return true;
         }
@@ -207,7 +222,7 @@ public class SearchBinderFactory<E extends Folk> {
          * @param field проверяемое поле
          * @return Возвращает статус поля
          */
-        private int createFieldState(Field field) {
+        private int createFieldState(Member field) {
             int state = 0;
             // Статус поиска
             state = state | (isSearchableField(field) ? SearchableField.SEARCHABLE : 0);
@@ -240,6 +255,15 @@ public class SearchBinderFactory<E extends Folk> {
                     fields.add(new SearchableField(field, key, ClassUtils.resolvePrimitiveIfNecessary(field.getType()), field.getName(), state));
                 }
             }
+            // Добавляем методы класса
+            for (Method method : ReflectionUtil.getAnnotatedMethodsList(key, Searchable.class)) {
+                // Получаем статус поля
+                final int state = createFieldState(method);
+                // Проверяем типизацию
+                if (state != 0) {
+                    fields.add(new SearchableField(method, key, ClassUtils.resolvePrimitiveIfNecessary(method.getReturnType()), ReflectionUtil.extractFieldName(method), state));
+                }
+            }
             // Возвращаем найденные поля
             return fields;
         }
@@ -264,6 +288,7 @@ public class SearchBinderFactory<E extends Folk> {
     }
 
 
+    @ToString(of = "name")
     public static final class SearchableField implements Serializable, Cloneable {
 
         private static final long serialVersionUID = 4446973919932421179L;
@@ -276,7 +301,7 @@ public class SearchBinderFactory<E extends Folk> {
         public static final int SORTABLE = 5;
 
         /** Поле поиска */
-        private final transient Field field;
+        private final transient Member field;
         /** Класс, в котором объявлено поле */
         private final Class<?> declaringClass;
         /** Название поля в объявленном классе */
@@ -289,7 +314,7 @@ public class SearchBinderFactory<E extends Folk> {
         /** Статус поля */
         private final int state;
 
-        public SearchableField(Field field, Class<?> declaringClass, Class<?> type, String declaringName, Integer state) {
+        public SearchableField(Member field, Class<?> declaringClass, Class<?> type, String declaringName, Integer state) {
             this.field = field;
             this.declaringClass = declaringClass;
             this.declaringName = declaringName;
@@ -298,7 +323,7 @@ public class SearchBinderFactory<E extends Folk> {
             this.state = state;
         }
 
-        public Field getField() {
+        public Member getField() {
             return field;
         }
 

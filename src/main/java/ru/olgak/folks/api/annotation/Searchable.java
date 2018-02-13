@@ -4,13 +4,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Аннотация <class>Searchable</class> помечает поля, по которым возможен поикс
  *
  */
-@Target(FIELD)
+@Target({FIELD, METHOD})
 @Retention(RUNTIME)
 public @interface Searchable {
 

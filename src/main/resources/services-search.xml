@@ -18,6 +18,9 @@
                     </key>
                     <bean class="ru.hflabs.util.lucene.analysis.WhitespaceLowerCaseAnalyzer"/>
                 </entry>
+                <entry key="Folk.fio">
+                    <bean class="ru.hflabs.util.lucene.analysis.WhitespaceLowerCaseAnalyzer"/>
+                </entry>
             </util:map>
         </constructor-arg>
     </bean>
