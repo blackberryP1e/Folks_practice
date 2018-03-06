@@ -132,8 +132,9 @@ public class SearchBinderFactory<E extends Folk> {
                             result.add(attributeField);
                         }
                     }
+                    devices.forEach(d -> d.setFolk(null));
                 }
-                entity.setDevices(null);
+                entity.setDevices(new ArrayList<>(entity.getDevices()));
 
                 IndexableField currentField = new StoredField(OBJECT_FIELD, objectToByte(entity));
                 result.add(currentField);

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <jaxws:endpoint id="folksEndpoint" implementorClass="ru.olgak.folks.soap.FolksWS" address="http://localhost:8088/soap/services/folks/v1">
+        <jaxws:implementor>
+            <ref bean="folksWS"/>
+        </jaxws:implementor>
+        <jaxws:properties>
+            <entry key="schema-validation-enabled" value="IN"/>
+        </jaxws:properties>
+    </jaxws:endpoint>
+
+    <bean id="folksWS" class="ru.olgak.folks.soap.FolksWSImpl">
+        <constructor-arg name="searchService" ref="searchService"/>
+    </bean>
+
+</beans>

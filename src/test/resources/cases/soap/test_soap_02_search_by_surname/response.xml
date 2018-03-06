@@ -1,0 +1,23 @@
+﻿<searchResponse xmlns="http://olgak.ru/folks/v1">
+    <folk id="1">
+        <field name="surname">Иванов</field>
+        <field name="name"/>
+        <field name="patronymic"/>
+        <attribute id="1" type="DEVICE">
+            <field name="model">iPad</field>
+            <field name="os">UNKNOWN</field>
+            <field name="serialNumber">X234F</field>
+            <field name="type">UNKNOWN</field>
+        </attribute>
+    </folk>
+    <folk id="2">
+        <field name="surname">Иван Иванов</field>
+        <field name="name"/>
+        <field name="patronymic"/>
+    </folk>
+    <folk id="3">
+        <field name="surname">Сидоров</field>
+        <field name="name"/>
+        <field name="patronymic"/>
+    </folk>
+</searchResponse>

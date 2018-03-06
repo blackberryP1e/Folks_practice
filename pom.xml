@@ -60,6 +60,51 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <version>3.1.11</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-basics</artifactId>
+                        <version>0.11.1</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>generate-sources-by-wsdl</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                        <configuration>
+                            <sourceRoot>${project.build.directory}/generated-sources/src</sourceRoot>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>src/main/resources/wsdl/folks.wsdl</wsdl>
+                                    <validateWsdl>true</validateWsdl>
+                                    <wsdlLocation>classpath:wsdl/folks.wsdl</wsdlLocation>
+                                    <packagenames>
+                                        <packagename>ru.olgak.folks.soap</packagename>
+                                    </packagenames>
+                                    <bindingFiles>
+                                        <bindingFile>src/main/resources/wsdl/binding.xjb</bindingFile>
+                                    </bindingFiles>
+                                    <extraargs>
+                                        <extraarg>-verbose</extraarg>
+                                        <extraarg>-mark-generated</extraarg>
+                                        <extraarg>-fe</extraarg>
+                                        <extraarg>jaxws21</extraarg>
+                                        <extraarg>-xjc-XtoString</extraarg>
+                                    </extraargs>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
 
     </build>
@@ -184,6 +229,27 @@
         <!-- ########################################################################################## -->
 
         <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>3.1.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics-runtime</artifactId>
+            <version>0.11.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf.xjc-utils</groupId>
+            <artifactId>cxf-xjc-runtime</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+
+        <!-- ########################################################################################## -->
+
+        <dependency>
             <groupId>ru.hflabs</groupId>
             <artifactId>utils-dbunit</artifactId>
             <version>${ru.hflabs.util.version}</version>
@@ -201,6 +267,13 @@
             <groupId>org.swift.common</groupId>
             <artifactId>jira-soap</artifactId>
             <version>5.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <version>3.1.11</version>
             <scope>test</scope>
         </dependency>
 

@@ -50,7 +50,9 @@ public abstract class FeatureCase extends DataBaseContextTests {
      *
      * @return Возвращает пару: класс, описывающий специфику теста + обязательность наличия для каждого теста
      */
-    protected abstract <TCD extends TestCaseDefinition> Pair<Class<TCD>, Boolean> getTestSpecificProperties();
+    protected <TCD extends TestCaseDefinition> Pair<Class<TCD>, Boolean> getTestSpecificProperties() {
+        return null;
+    }
 
     /**
      * Возвращает корневой путь к данным

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<search xmlns="http://olgak.ru/folks/v1">
+    <query>Иванов</query>
+    <include>
+        <info>REQUISITE</info>
+        <info>ATTRIBUTE</info>
+    </include>
+</search>
+

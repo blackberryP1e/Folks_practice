@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://olgak.ru/folks/v1"
+             targetNamespace="http://olgak.ru/folks/v1">
+
+    <types>
+        <xs:schema targetNamespace="http://olgak.ru/folks/v1" elementFormDefault="qualified">
+
+            <xs:element name="search">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="query" type="xs:string"/>
+                        <xs:element name="include" type="tns:WInclude" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="searchResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="folk" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="field" type="tns:WField" minOccurs="0" maxOccurs="unbounded"/>
+                                    <xs:element name="attribute" type="tns:WAttribute" minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                                <xs:attribute name="id" type="xs:long"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:complexType name="WAttribute">
+                <xs:sequence>
+                    <xs:element name="field" type="tns:WField" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+                <xs:attribute name="type" type="xs:string" use="required"/>
+                <xs:attribute name="id" type="xs:long"/>
+            </xs:complexType>
+
+            <xs:complexType name="WField">
+                <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                        <xs:attribute name="name" type="xs:string" use="required">
+                        </xs:attribute>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+
+            <xs:complexType name="WInclude">
+                <xs:sequence>
+                    <xs:element name="info" maxOccurs="unbounded">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="REQUISITE"/>
+                                <xs:enumeration value="ATTRIBUTE"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+
+        </xs:schema>
+    </types>
+
+    <message name="searchSoapIn">
+        <part name="parameters" element="tns:search"/>
+    </message>
+    <message name="searchSoapOut">
+        <part name="parameters" element="tns:searchResponse"/>
+    </message>
+
+    <!--    <message name="errorResponse">
+            <part name="errorMessage" element="tns:errorMessage"/>
+        </message>-->
+
+    <portType name="FolksWS">
+        <operation name="search">
+            <input message="tns:searchSoapIn"/>
+            <output message="tns:searchSoapOut"/>
+            <!--<fault name="errorOrWarning" message="tns:errorResponse"/>-->
+        </operation>
+    </portType>
+
+    <binding name="FolksWS" type="tns:FolksWS">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="search">
+            <soap:operation soapAction="http://olgak.ru/soap/services/folks/search" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <!--<fault name="errorOrWarning">
+                <soap:fault name="errorOrWarning" use="literal"/>
+            </fault>-->
+        </operation>
+    </binding>
+
+    <service name="SoapPartyService">
+        <port name="FolksWS" binding="tns:FolksWS">
+            <soap:address location="http://localhost:8088/soap/services/folks/v1"/>
+        </port>
+    </service>
+</definitions>
