@@ -4,6 +4,7 @@
         <field name="name"/>
         <field name="patronymic"/>
         <attribute id="1" type="DEVICE">
+            <field name="actualityDate"/>
             <field name="model">iPad</field>
             <field name="os">UNKNOWN</field>
             <field name="serialNumber">X234F</field>

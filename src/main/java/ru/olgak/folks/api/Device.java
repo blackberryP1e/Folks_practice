@@ -8,6 +8,7 @@ import ru.olgak.folks.api.model.DeviceOS;
 import ru.olgak.folks.api.model.DeviceType;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /** Класс <class>Device</class> описывает устройство участника */
 @Getter
@@ -38,5 +39,9 @@ public class Device extends AbstractEntity {
     // Автор изменений
     @Searchable(search = true, filter = true)
     private String author;
+
+    // Дата актуальности
+    @Temporal(TemporalType.DATE)
+    private Date actualityDate;
 
 }

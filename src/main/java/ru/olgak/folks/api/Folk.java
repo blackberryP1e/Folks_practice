@@ -30,6 +30,10 @@ public class Folk extends AbstractEntity {
     @Searchable(search = true, filter = true, sort = true)
     private String patronymic;
 
+    // Предпочитаемое имя
+    @Searchable(search = true)
+    private String preferredName;
+
     // Пол
     @Searchable(filter = true, sort = true)
     @Enumerated(value = EnumType.ORDINAL)
@@ -40,17 +44,24 @@ public class Folk extends AbstractEntity {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
+    // Место рождения
+    private String birthPlace;
+
     // Дата первого посещения конференции
     @Searchable(filter = true)
     @Temporal(TemporalType.DATE)
     private Date firstConfDate;
 
     // Компания, в которой работает участник
-    @Searchable(search = true)
+    @Searchable(search = true, filter = true)
     private String company;
 
     // Должность
     private String position;
+
+    // Дата начала работы
+    @Temporal(TemporalType.DATE)
+    private Date jobStartDate;
 
     // Автор изменений
     @Searchable(search = true, filter = true)
@@ -81,6 +92,13 @@ public class Folk extends AbstractEntity {
     // Средний рейтинг участника
     @Searchable(filter = true)
     private BigDecimal averageRating;
+
+    // Язык контакта с Клиентом
+    private String language;
+
+    // Дата актуальности
+    @Temporal(TemporalType.DATE)
+    private Date actualityDate;
 
     @Searchable(filter = true)
     public String getFio() {
