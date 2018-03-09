@@ -17,10 +17,10 @@
         </property>
         <property name="expectedResult">
             <util:list>
-                <value>11</value>
-                <value>10</value>
-                <value>2</value>
+                <value>3</value>
+                <value>4</value>
                 <value>1</value>
+                <value>2</value>
             </util:list>
         </property>
     </bean>
