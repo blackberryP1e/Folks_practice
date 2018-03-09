@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.apache.lucene.document.*;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.index.IndexableField;
+import org.apache.lucene.util.BytesRef;
 import org.springframework.util.ClassUtils;
 import ru.hflabs.util.core.FormatUtil;
 import ru.hflabs.util.core.Holder;
@@ -72,8 +73,9 @@ public class SearchBinderFactory<E extends Folk> {
                 for (SearchableField field : binderClassesHolder.getValue(binderClass)) {
                     // Обрабатываем поля в зависимости от его типа
                     if (CharSequence.class.isAssignableFrom(field.getType())) {
-                        filterField = new TextField(field.getName(), FormatUtil.format((String) getFieldValue(entity, field)), Store.NO);
-                        searchField = filterField;
+                        String value = FormatUtil.format((String) getFieldValue(entity, field));
+                        filterField = new SortedDocValuesField(field.getName(), new BytesRef(value));
+                        searchField = new TextField(field.getName(), value, Store.NO);
                     } else if (Integer.class.isAssignableFrom(field.getType())) {
                         int value = integerToPrimitive((Integer) getFieldValue(entity, field));
                         filterField = new NumericDocValuesField(field.getName(), value);
@@ -90,8 +92,9 @@ public class SearchBinderFactory<E extends Folk> {
                         filterField = new StringField(field.getName(), FormatUtil.format((Boolean) getFieldValue(entity, field)), Store.NO);
                         searchField = filterField;
                     } else if (Enum.class.isAssignableFrom(field.getType())) {
-                        filterField = new TextField(field.getName(), FormatUtil.format((Enum) getFieldValue(entity, field), false), Store.NO);
-                        searchField = filterField;
+                        String value = FormatUtil.format((Enum) getFieldValue(entity, field), false);
+                        filterField = new SortedDocValuesField(field.getName(), new BytesRef(value));
+                        searchField = new TextField(field.getName(), value, Store.NO);
                     } else if (Date.class.isAssignableFrom(field.getType())) {
                         long value = dateToLong((Date) getFieldValue(entity, field));
                         filterField = new NumericDocValuesField(field.getName(), value);
