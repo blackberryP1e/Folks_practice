@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- Дескриптор редактирования -->
+    <bean id="toSearchDescriptor.test_so_01_sort_integer" parent="toSearchDescriptor">
+        <constructor-arg index="0">
+            <bean class="ru.hflabs.cdi.service.party.PartyFilter">
+                <property name="sortOrderKey" value="dependantsCount"/>
+                <property name="sortOrderValue">
+                    <util:constant static-field="javax.swing.SortOrder.DESCENDING"/>
+                </property>
+            </bean>
+        </constructor-arg>
+        <property name="expectedResult">
+            <util:list>
+                <value>11</value>
+                <value>10</value>
+                <value>2</value>
+                <value>1</value>
+            </util:list>
+        </property>
+    </bean>
+
+</beans>
