@@ -6,15 +6,15 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!-- Дескриптор редактирования -->
-    <bean id="toSearchDescriptor.test_so_01_sort_integer" parent="toSearchDescriptor">
-        <constructor-arg index="0">
-            <bean class="ru.hflabs.cdi.service.party.PartyFilter">
-                <property name="sortOrderKey" value="dependantsCount"/>
+    <bean id="toSearchDescriptor.test_so_02_sort_surname" parent="toSearchDescriptor">
+        <property name="entityQuery">
+            <bean class="ru.olgak.folks.api.search.EntityQuery">
+                <property name="sortOrderKey" value="surname"/>
                 <property name="sortOrderValue">
                     <util:constant static-field="javax.swing.SortOrder.DESCENDING"/>
                 </property>
             </bean>
-        </constructor-arg>
+        </property>
         <property name="expectedResult">
             <util:list>
                 <value>11</value>
