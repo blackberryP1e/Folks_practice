@@ -28,7 +28,7 @@ public class SoapCase extends FeatureCase implements ITestCaseExecutor<TestCaseD
     @Resource(name = "searchService")
     private SearchService<Folk> searchService;
     /** Endpoint тестируемого сервиса */
-    @Resource(name = "folksEndpoint")
+    @Resource(name = "folksSoap")
     protected EndpointImpl endpoint;
     /** Динамический сервис */
     protected Dispatch<Source> dispatch;

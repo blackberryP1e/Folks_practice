@@ -48,52 +48,52 @@ import java.util.List;
     "folk"
 })
 @XmlRootElement(name = "searchResponse")
-@Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+@Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
 public class SearchResponse implements ToString2
 {
 
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
-    protected List<SearchResponse.Folk> folk;
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
+    protected List<Folk> folk;
 
     /**
      * Gets the value of the folk property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the folk property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getFolk().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link SearchResponse.Folk }
-     * 
-     * 
+     * {@link Folk }
+     *
+     *
      */
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
-    public List<SearchResponse.Folk> getFolk() {
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
+    public List<Folk> getFolk() {
         if (folk == null) {
-            folk = new ArrayList<SearchResponse.Folk>();
+            folk = new ArrayList<Folk>();
         }
         return this.folk;
     }
 
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public String toString() {
-        final ToStringStrategy2 strategy = JAXBToStringStrategy.INSTANCE;
+        final ToStringStrategy2 strategy = JAXBToStringStrategy.INSTANCE2;
         final StringBuilder buffer = new StringBuilder();
         append(null, buffer, strategy);
         return buffer.toString();
     }
 
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public StringBuilder append(ObjectLocator locator, StringBuilder buffer, ToStringStrategy2 strategy) {
         strategy.appendStart(locator, this, buffer);
         appendFields(locator, buffer, strategy);
@@ -101,10 +101,10 @@ public class SearchResponse implements ToString2
         return buffer;
     }
 
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy2 strategy) {
         {
-            List<SearchResponse.Folk> theFolk;
+            List<Folk> theFolk;
             theFolk = (((this.folk!= null)&&(!this.folk.isEmpty()))?this.getFolk():null);
             strategy.appendField(locator, this, "folk", buffer, theFolk, ((this.folk!= null)&&(!this.folk.isEmpty())));
         }
@@ -138,16 +138,16 @@ public class SearchResponse implements ToString2
         "field",
         "attribute"
     })
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public static class Folk implements ToString2
     {
 
-        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
         protected List<WField> field;
-        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
         protected List<WAttribute> attribute;
         @XmlAttribute(name = "id")
-        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
         protected Long id;
 
         /**
@@ -172,7 +172,7 @@ public class SearchResponse implements ToString2
          * 
          * 
          */
-        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
         public List<WField> getField() {
             if (field == null) {
                 field = new ArrayList<WField>();
@@ -202,7 +202,7 @@ public class SearchResponse implements ToString2
          * 
          * 
          */
-        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
         public List<WAttribute> getAttribute() {
             if (attribute == null) {
                 attribute = new ArrayList<WAttribute>();
@@ -218,7 +218,7 @@ public class SearchResponse implements ToString2
          *     {@link Long }
          *     
          */
-        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
         public Long getId() {
             return id;
         }
@@ -231,20 +231,20 @@ public class SearchResponse implements ToString2
          *     {@link Long }
          *     
          */
-        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
         public void setId(Long value) {
             this.id = value;
         }
 
-        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
         public String toString() {
-            final ToStringStrategy2 strategy = JAXBToStringStrategy.INSTANCE;
+            final ToStringStrategy2 strategy = JAXBToStringStrategy.INSTANCE2;
             final StringBuilder buffer = new StringBuilder();
             append(null, buffer, strategy);
             return buffer.toString();
         }
 
-        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
         public StringBuilder append(ObjectLocator locator, StringBuilder buffer, ToStringStrategy2 strategy) {
             strategy.appendStart(locator, this, buffer);
             appendFields(locator, buffer, strategy);
@@ -252,7 +252,7 @@ public class SearchResponse implements ToString2
             return buffer;
         }
 
-        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+        @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
         public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy2 strategy) {
             {
                 List<WField> theField;

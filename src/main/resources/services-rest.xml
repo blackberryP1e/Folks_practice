@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <jaxrs:server id="folksRest" serviceClass="ru.olgak.folks.soap.FolksWS" address="http://localhost:8088/rest/services/folks/v1">
+        <jaxrs:serviceBeans>
+            <ref bean="folksWS"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="jsonProvider"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <bean id="jsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider">
+        <property name="mapper">
+            <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+                <property name="featuresToEnable">
+                    <array>
+                        <util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT"/>
+                        <util:constant static-field="com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT"/>
+                    </array>
+                </property>
+                <property name="featuresToDisable">
+                    <array>
+                        <util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS"/>
+                        <util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_EMPTY_JSON_ARRAYS"/>
+                        <util:constant static-field="com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES"/>
+                    </array>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+
+</beans>

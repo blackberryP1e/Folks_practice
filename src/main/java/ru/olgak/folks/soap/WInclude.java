@@ -45,12 +45,12 @@ import java.util.List;
 @XmlType(name = "WInclude", propOrder = {
     "info"
 })
-@Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+@Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
 public class WInclude implements ToString2
 {
 
     @XmlElement(required = true)
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     protected List<String> info;
 
     /**
@@ -75,7 +75,7 @@ public class WInclude implements ToString2
      * 
      * 
      */
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public List<String> getInfo() {
         if (info == null) {
             info = new ArrayList<String>();
@@ -83,15 +83,15 @@ public class WInclude implements ToString2
         return this.info;
     }
 
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public String toString() {
-        final ToStringStrategy2 strategy = JAXBToStringStrategy.INSTANCE;
+        final ToStringStrategy2 strategy = JAXBToStringStrategy.INSTANCE2;
         final StringBuilder buffer = new StringBuilder();
         append(null, buffer, strategy);
         return buffer.toString();
     }
 
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public StringBuilder append(ObjectLocator locator, StringBuilder buffer, ToStringStrategy2 strategy) {
         strategy.appendStart(locator, this, buffer);
         appendFields(locator, buffer, strategy);
@@ -99,7 +99,7 @@ public class WInclude implements ToString2
         return buffer;
     }
 
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy2 strategy) {
         {
             List<String> theInfo;

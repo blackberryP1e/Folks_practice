@@ -40,17 +40,17 @@ import java.util.List;
 @XmlType(name = "WAttribute", propOrder = {
     "field"
 })
-@Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+@Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
 public class WAttribute implements ToString2
 {
 
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     protected List<WField> field;
     @XmlAttribute(name = "type", required = true)
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     protected String type;
     @XmlAttribute(name = "id")
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     protected Long id;
 
     /**
@@ -75,7 +75,7 @@ public class WAttribute implements ToString2
      * 
      * 
      */
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public List<WField> getField() {
         if (field == null) {
             field = new ArrayList<WField>();
@@ -91,7 +91,7 @@ public class WAttribute implements ToString2
      *     {@link String }
      *     
      */
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public String getType() {
         return type;
     }
@@ -104,7 +104,7 @@ public class WAttribute implements ToString2
      *     {@link String }
      *     
      */
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public void setType(String value) {
         this.type = value;
     }
@@ -117,7 +117,7 @@ public class WAttribute implements ToString2
      *     {@link Long }
      *     
      */
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public Long getId() {
         return id;
     }
@@ -130,20 +130,20 @@ public class WAttribute implements ToString2
      *     {@link Long }
      *     
      */
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public void setId(Long value) {
         this.id = value;
     }
 
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public String toString() {
-        final ToStringStrategy2 strategy = JAXBToStringStrategy.INSTANCE;
+        final ToStringStrategy2 strategy = JAXBToStringStrategy.INSTANCE2;
         final StringBuilder buffer = new StringBuilder();
         append(null, buffer, strategy);
         return buffer.toString();
     }
 
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public StringBuilder append(ObjectLocator locator, StringBuilder buffer, ToStringStrategy2 strategy) {
         strategy.appendStart(locator, this, buffer);
         appendFields(locator, buffer, strategy);
@@ -151,7 +151,7 @@ public class WAttribute implements ToString2
         return buffer;
     }
 
-    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-03-26T03:41:16+07:00", comments = "JAXB RI v2.2.11")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2018-09-01T09:15:45+03:00", comments = "JAXB RI v2.2.11")
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy2 strategy) {
         {
             List<WField> theField;
