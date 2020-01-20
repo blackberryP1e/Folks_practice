@@ -1,0 +1,174 @@
+{
+  "folk": [
+    {
+      "id": 1,
+      "field": [
+        {
+          "value": "Master",
+          "name": "surname"
+        },
+        {
+          "value": "Yoda",
+          "name": "name"
+        },
+        {
+          "value": null,
+          "name": "patronymic"
+        },
+        {
+          "value": null,
+          "name": "preferredName"
+        },
+        {
+          "value": "UNKNOWN",
+          "name": "gender"
+        },
+        {
+          "value": null,
+          "name": "birthDate"
+        },
+        {
+          "value": null,
+          "name": "birthPlace"
+        },
+        {
+          "value": null,
+          "name": "firstConfDate"
+        },
+        {
+          "value": null,
+          "name": "company"
+        },
+        {
+          "value": null,
+          "name": "position"
+        },
+        {
+          "value": null,
+          "name": "jobStartDate"
+        },
+        {
+          "value": null,
+          "name": "author"
+        },
+        {
+          "value": null,
+          "name": "city"
+        },
+        {
+          "value": "false",
+          "name": "speaker"
+        },
+        {
+          "value": "false",
+          "name": "organizator"
+        },
+        {
+          "value": "UNKNOWN",
+          "name": "vipFlag"
+        },
+        {
+          "value": "0",
+          "name": "visitCount"
+        },
+        {
+          "value": "0.00",
+          "name": "averageRating"
+        },
+        {
+          "value": null,
+          "name": "language"
+        },
+        {
+          "value": null,
+          "name": "actualityDate"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "field": [
+        {
+          "value": null,
+          "name": "surname"
+        },
+        {
+          "value": "Master Yoda",
+          "name": "name"
+        },
+        {
+          "value": null,
+          "name": "patronymic"
+        },
+        {
+          "value": null,
+          "name": "preferredName"
+        },
+        {
+          "value": "UNKNOWN",
+          "name": "gender"
+        },
+        {
+          "value": null,
+          "name": "birthDate"
+        },
+        {
+          "value": null,
+          "name": "birthPlace"
+        },
+        {
+          "value": null,
+          "name": "firstConfDate"
+        },
+        {
+          "value": null,
+          "name": "company"
+        },
+        {
+          "value": null,
+          "name": "position"
+        },
+        {
+          "value": null,
+          "name": "jobStartDate"
+        },
+        {
+          "value": null,
+          "name": "author"
+        },
+        {
+          "value": null,
+          "name": "city"
+        },
+        {
+          "value": "false",
+          "name": "speaker"
+        },
+        {
+          "value": "false",
+          "name": "organizator"
+        },
+        {
+          "value": "UNKNOWN",
+          "name": "vipFlag"
+        },
+        {
+          "value": "0",
+          "name": "visitCount"
+        },
+        {
+          "value": "0.00",
+          "name": "averageRating"
+        },
+        {
+          "value": null,
+          "name": "language"
+        },
+        {
+          "value": null,
+          "name": "actualityDate"
+        }
+      ]
+    }
+  ]
+}

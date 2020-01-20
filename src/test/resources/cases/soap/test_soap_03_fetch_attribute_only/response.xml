@@ -1,0 +1,11 @@
+﻿<searchResponse xmlns="http://olgak.ru/folks/v1">
+    <folk id="1">
+        <attribute id="1" type="DEVICE">
+            <field name="actualityDate"/>
+            <field name="model">iPad</field>
+            <field name="os">UNKNOWN</field>
+            <field name="serialNumber"/>
+            <field name="type">UNKNOWN</field>
+        </attribute>
+    </folk>
+</searchResponse>

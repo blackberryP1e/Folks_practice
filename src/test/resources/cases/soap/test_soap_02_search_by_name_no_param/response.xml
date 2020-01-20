@@ -1,0 +1,7 @@
+﻿<searchResponse xmlns="http://olgak.ru/folks/v1">
+    <folk id="1">
+        <field name="surname"/>
+        <field name="name">Иван</field>
+        <field name="patronymic"/>
+    </folk>
+</searchResponse>

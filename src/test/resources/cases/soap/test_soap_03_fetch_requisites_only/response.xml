@@ -1,0 +1,24 @@
+﻿<searchResponse xmlns="http://olgak.ru/folks/v1">
+    <folk id="2">
+        <field name="name">Иван</field>
+        <field name="patronymic"/>
+        <field name="surname"/>
+        <field name="preferredName"/>
+        <field name="gender">UNKNOWN</field>
+        <field name="birthDate"/>
+        <field name="birthPlace"/>
+        <field name="firstConfDate"/>
+        <field name="company"/>
+        <field name="position"/>
+        <field name="jobStartDate"/>
+        <field name="author"/>
+        <field name="city"/>
+        <field name="speaker">false</field>
+        <field name="organizator">false</field>
+        <field name="vipFlag">UNKNOWN</field>
+        <field name="visitCount">0</field>
+        <field name="averageRating">0.00</field>
+        <field name="language"/>
+        <field name="actualityDate"/>
+    </folk>
+</searchResponse>

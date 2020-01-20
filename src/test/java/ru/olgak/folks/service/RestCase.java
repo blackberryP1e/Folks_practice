@@ -39,7 +39,7 @@ public class RestCase extends FeatureCase implements ITestCaseExecutor<TestCaseD
 
     @Override
     public void executeTestMethod(DataBaseTestDescriptor<TestCaseDefinition> descriptor) throws Exception {
-        LOG.info("Rebuild search index...");
+            LOG.info("Rebuild search index...");
         // Перестраиваем
         searchService.rebuild();
 
