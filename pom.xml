@@ -19,7 +19,7 @@
     <name>Folks example</name>
 
     <properties>
-        <hibernate.version>4.2.2.Final</hibernate.version>
+        <hibernate.version>5.4.24.Final</hibernate.version>
         <ru.hflabs.util.version>1.7.7-SNAPSHOT</ru.hflabs.util.version>
         <maven.checkstyle.skip>true</maven.checkstyle.skip>
         <cxf.property>3.2.5</cxf.property>
